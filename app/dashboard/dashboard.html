@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp"> 
+<head>
+<title>Rob Backend</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+
+body { -webkit-backface-visibility: hidden; padding: 10px 30px; 
+  font-family: "Calibri", "Trebuchet MS", "Helvetica", sans-serif;
+}
+</style>
+</head>
+<body>
+    <div class="container">
+        <h3 style="margin-bottom: 50px"><a ng-click="goToBills()">Bills</a> | <a ng-click="goToCashback()">Cashbacks</a> |  <a ng-click="goToOutlets()">Outlets</a> | <a ng-click="goToOffers()">Offers</a> | <a ng-click="goToBillsByOutlet()">Bills By Outlet</a>	| Dashboard |<a ng-click="goToUsers()">Users</a></h3>
+        <div class="row" style ="width: auto; border-radius: 25px; border-style: solid; border-color: vilot; padding: 20px; ">
+	<h3 style="color:blue;"><a href="/bills" style="color:blue;">Bills</a></h3>
+  <div>
+    <div ng-controller="DboardCtrl" ng-repeat="data in bills" ng-init="Bcount($index)">
+    </div>
+    <h4> Bills Count:{{Billcount+1}}</h4>  
+    <div ng-controller="DboardCtrl" ng-repeat="data in pendingbills" ng-init="BPcount($index)">
+    </div>
+    <h4>To be Verified: {{PendingBillcount+1}}</h4>
+        <div ng-controller="DboardCtrl" ng-repeat="data in checkedAbills" ng-init="BCAcount($index)">
+    </div>
+     <div ng-controller="DboardCtrl" ng-repeat="data in checkedRbills" ng-init="BCRcount($index)">
+    </div>
+     <h4>Verified :<br/>Approved:{{AcheckedBillcount+1}}<br/>Rejected:{{RcheckedBillcount+1}}</h4>
+  </div>
+  </div>
+  <div class="row" style ="width: auto; border-radius: 25px; border-style: solid; border-color: vilot; padding: 20px; ">
+  <h3 style="color:blue;"><a href="/bills" style="color:blue;">Outlets</a></h3>
+  <div>
+    <div ng-controller="DboardCtrl" ng-repeat="data in outlets" ng-init="Ocount($index)">
+    </div>
+  </div>
+    <h4>Outlets Count:{{Outletcount+1}}</h4>  
+  </div>
+  <div class="row" style ="width: auto; border-radius: 25px; border-style: solid; border-color: vilot; padding: 20px; ">
+  <h3 style="color:blue;"><a href="/bills" style="color:blue;">Users</a></h3>
+  <div>
+    <div ng-controller="DboardCtrl" ng-repeat="data in users" ng-init="Ucount($index)">
+    </div>
+    <h4>Users Count:{{Usercount+1}}</h4>  
+  </div>
+  </div>
+  <div class="row" style ="width: auto; border-radius: 25px; border-style: solid; border-color: vilot; padding: 20px; ">
+  <h3 style="color:blue;"><a href="/bills" style="color:blue;">Locations</a></h3>
+  <div>
+    <div ng-controller="DboardCtrl" ng-repeat="data in localities" ng-init="Lcount($index)">
+    </div>
+    <h4>Locations Covered:{{Locationcount+1}}</h4>  
+  </div>
+  </div>
+  <div class="row" style ="width: auto; border-radius: 25px; border-style: solid; border-color: vilot; padding: 20px; ">
+  <h3 style="color:blue;"><a href="/bills" style="color:blue;">Cashbacks</a></h3>
+  <div>
+    <div ng-controller="DboardCtrl" ng-repeat="data in cashbacks" ng-init="Ccount($index)">
+    </div>
+    <h4>Cashbacks Count:{{Cashbackcount+1}}</h4> 
+    </div>
+       </div>
+</body></html>

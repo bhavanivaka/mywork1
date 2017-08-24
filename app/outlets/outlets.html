@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>Rob Backend</title>
+ <style>
+.button-container form,
+.button-container form div {
+    display: inline;
+    float: right;
+}
+.button-container button {
+    display: inline;
+    vertical-align: middle;
+}
+</style>
+</head>
+<body>
+    <div class="container">
+        <h3 style="margin-bottom: 50px"><a ng-click="goToBills()">Bills</a> | <a ng-click="goToCashback()">Cashbacks</a> | Outlets | 
+    <a ng-click="goToSearchOutlets()">Filter Outlets</a> | <a ng-click="goToOffers()">Offers</a>| <a ng-click="goToDashboard()">Dashboard</a> |<a ng-click="goToUsers()">Users</a></h3>      
+    <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#myModal" style="margin-bottom: 25px">Add Outlet</button>
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+            <form name="outletForm" id="outletForm" ng-submit="submit(outletForm)">
+            <!-- Modal content-->
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Outlet</h4>
+            </div>
+            <div class="modal-body">
+                    <label class="item item-input" style="margin: 10px 0">
+                        <input type="text" ng-model="outlet.name" placeholder="Name" required>
+                    </label>
+                    <label class="item item-input" style="margin: 10px 0">
+                        <input type="text" ng-model="outlet.description" placeholder="Description" required>
+                    </label>
+                    <label class="item item-input" style="margin: 10px 0">
+                        <input type="text" ng-model="outlet.mobile" placeholder="Contact Number" required>
+                    </label>
+                     <label class="item item-input" style="margin: 10px 0">
+                        <input type="text" ng-model="outlet.face" placeholder="Image link" required>
+                    </label>
+                    <label class="item item-input" style="margin: 10px 0">
+            <select id="LocationSelector" ng-model="outlet.locality" style="width: 100%;" required>
+                <option ng-repeat="data in localities">{{data.name}}</option>
+            </select>
+                    </label>
+                    <label class="item item-input" style="margin: 10px 0">
+                        <input type="text" ng-model="outlet.address" placeholder="Address" required>
+                    </label>
+                    <label class="item item-input" style="margin: 10px 0">
+                        <input type="text" ng-model="outlet.offer" placeholder="Offer" required>
+                    </label>
+                    <label class="item item-input" style="margin: 10px 0">
+                        <input type="number" ng-model="outlet.cashback" placeholder="Cashback" required>
+                    </label>
+                    <label class="item item-input" style="margin: 10px 0">
+                        <select ng-model="outlet.trending" required>
+                            <option value=true>True</option>
+                            <option value=false>False</option>
+                        </select>
+                    </label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button class="btn btn-primary" type="submit" >Save</button>
+            </div>
+            </form>
+            </div>
+
+        </div>
+        </div>
+        <table class="table table-bordered" style="background: #fff;">
+            <thead>
+            <tr>
+                <td>Id</td>
+                <td>Name</td>
+                <td>Date</td>
+                <td>Image</td>
+                <td>Address</td>
+                <td>Location</td>
+                <td>Offer</td>
+                <td>Trending</td>
+                <td>Mobile</td>
+                <td>Description</td>
+                <td>Cashback</td>
+            </tr>
+            </thead>
+            <tbody ng-repeat="data in outlets | orderBy:'date'">
+                <tr>
+                    <td>{{ data.id }}</td>
+                    <td><a  href ng-hide="nameEdit" ng-dblclick="nameEdit=true" style="color: #000000">{{data.name}}</a>
+                        <div ng-show="nameEdit">
+                        <label>Edit Name:</label>
+                        <input type="text" ng-value="data.name" id="storeName" name="storeName">
+                        <button type="submit" class="btn" ng-click="Ename(data)">Edit</button>
+                        </div>
+                    </td>
+                    <td ><a  href ng-hide="nameEdit" ng-dblclick="nameEdit=true" style="color: #000000">{{ data.date }}</td>
+                    <td><img ng-src="{{ data.face }}" class="outlet-image"/></td>
+                    <td><a  href ng-hide="addressEdit" ng-dblclick="addressEdit=true" style="color: #000000"><a  href ng-hide="addressEdit" ng-dblclick="addressEdit=true" style="color: #000000">{{ data.address }}</a>
+                        <div ng-show="addressEdit">
+                        <label>Edit Address:</label>
+                        <input type="text" ng-value="data.address" id="storeAddress" name="storeAddress">
+                        <button type="submit" class="btn" ng-click="Eaddress(data)">Edit</button>
+                        </div>
+                    </td>
+                    <td><a  href ng-hide="localityEdit" ng-dblclick="localityEdit=true" style="color: #000000">{{ data.locality }}</a>
+                        <div ng-show="localityEdit">
+                        <label>Edit Locality:</label>
+                        <select id="storeLocality" name="storeLocality" style="width: 100%;" required>
+                            <option ng-repeat="data in localities">{{data.name}}</option>
+                        </select>
+                        <button type="submit" class="btn" ng-click="Elocality(data)">Edit</button>
+                        </div></td>
+                    <td><a  href ng-hide="offerEdit" ng-dblclick="offerEdit=true" style="color: #000000">{{ data.offer }}</a>
+                        <div ng-show="offerEdit">
+                        <label>Edit Offer:</label>
+                        <input type="text" ng-value="data.offer" id="storeOffer" name="storeOffer">
+                        <button type="submit" class="btn" ng-click="Eoffer(data)">Edit</button>
+                        </div></td>
+                    <td><a  href ng-hide="trendingEdit" ng-dblclick="trendingEdit=true" style="color: #000000">{{ data.trending }}</a>
+                        <div ng-show="trendingEdit">
+                        <label>Edit Trending:</label>
+                        <select id="storeTrending" name="storeTrending" required>
+                            <option value=true>True</option>
+                            <option value=false>False</option>
+                        </select>
+                        <button type="submit" class="btn" ng-click="Etrending(data)">Edit</button>
+                        </div></td>
+                    <td><div ng-if= "!data.mobile"><a  href ng-hide="mobileEnter" ng-dblclick="mobileEnter=true" style="color: #000000">add</a>
+                        <div ng-show="mobileEnter">
+                        <label>Enter Mobile:</label>
+                        <input type="text" ng-value="data.mobile" id="newMobile" name="newMobile">
+                        <button type="submit" class="btn" ng-click="enterMobile(data)">Add</button>
+                        </div>
+                        </div>
+                        <div ng-if = "data.mobile"><a  href ng-hide="mobileEdit" ng-dblclick="mobileEdit=true" style="color: #000000">{{ data.mobile }}</a>
+                        <div ng-show="mobileEdit">
+                        <label>Edit Mobile:</label>
+                        <input type="text" ng-value="data.mobile" id="storeMobile" name="storeMobile">
+                        <button type="submit" class="btn" ng-click="Emobile(data)">Edit</button>
+                        </div>
+                    </div>
+                    </td>
+                    <td><a  href ng-hide="descEdit" ng-dblclick="descEdit=true" style="color: #000000">{{ data.description }}</a>
+                        <div ng-show="descEdit">
+                        <label>Edit Description:</label>
+                        <input type="text" ng-value="data.description" id="storeDes" name="storeDes">
+                        <button type="submit" class="btn" ng-click="Edescription(data)">Edit</button>
+                        </div></td>
+                    <td><a  href ng-hide="cashbackEdit" ng-dblclick="cashbackEdit=true" style="color: #000000">{{ data.cashback }}</a>
+                        <div ng-show="cashbackEdit">
+                        <label>Edit Cashback:</label>
+                        <input type="text" ng-value="data.cashback" id="storeCashback" name="storeCashback">
+                        <button type="submit" class="btn" ng-click="Ecashback(data)">Edit</button>
+                        </div></td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>

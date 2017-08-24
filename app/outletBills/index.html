@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Rob Backend</title>
+</head>
+<body>
+    <div class="container">
+        <h3 style="margin-bottom: 50px"><a ng-click="goToBills()">Bills</a> | <a ng-click="goToCashback()">Cashbacks</a> |<a ng-click="goToOutlets()"> Outlets </a>| <a ng-click="goToOffers()">Offers</a> | Bills by outlet| <a ng-click="goToDashboard()">Dashboard</a> |<a ng-click="goToUsers()">Users</a></h3>
+        <form name="searchForm" ng-submit="submit(searchForm)" style="margin-bottom: 20px">
+            <label>
+                <select id="store_id" ng-model="store_id" style="width: 100%;" required>
+			<option ng-repeat="data in stores" value="{{data.id}}">{{data.name}}&nbsp&nbsp&nbsp&nbsp--{{data.locality}}</option>
+		</select>
+            </label>
+            <button class="btn btn-default" type="submit">Search</button>
+        </form>
+        <table class="table table-bordered" style="background: #fff;">
+            <thead>
+            <tr>
+                <td>Id</td>
+                <td>Phone</td>
+                <td>Image</td>
+                <td>User Id</td>
+                <td>Offer</td>
+                <td>Status</td>
+                <td>Created At</td>
+            </tr>
+            </thead>
+            <tbody ng-repeat="data in bills">
+                <tr>
+                    <td>{{ data.store_id }}</td>
+                    <td>{{ data.phone }}</td>
+                    <td><img ng-src="{{ data.face }}" class="outlet-image"/></td>
+                    <td>{{ data.user_id }}</td>
+                    <td>{{ data.offer_title }}</td>
+                    <td>{{ data.status }}</td>
+                    <td>{{ data.createdAt }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>

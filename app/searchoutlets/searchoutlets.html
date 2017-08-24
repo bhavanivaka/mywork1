@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Rob Backend</title>
+</head>
+<body>
+    <div class="container">
+        <h3 style="margin-bottom: 50px"><a ng-click="goToBills()">Bills</a> | <a ng-click="goToDashboard()">Dashboard</a> |<a ng-click="goToUsers()">Users</a>|<a ng-click="goToCashbacks()"> Cashbacks</a> | <a ng-click="goToOutlets()">Outlets</a> | <a ng-click="goToOffers()">Offers</a></h3>
+<form name="searchForm" id="searchForm" ng-submit="submit(searchForm)" style="float:left;">
+            <label>
+                <select id="localities" ng-model="localities" style="width: 100%;" required>
+			<option ng-repeat="data in stores" >{{data.locality}}</option>
+		</select>
+            </label>
+            <button  class="btn btn-default" type="submit" value="submit">Search By Locality</button>
+</form>
+<form name="search1Form" id="search1Form" ng-submit="submit1(search1Form)" style="float:left;">
+            <label>
+                <select id="name" ng-model="name" style="width: 100%;" required>
+			<option ng-repeat="data in stores" >{{data.name}}</option>
+		</select>
+            </label>
+            <button  class="btn btn-default" type="submit" value="submit1">Search By Name</button>
+</form>
+<form name="search2Form" id="search2Form" ng-submit="submit2(search2Form)" style="float:left;">
+            <label>
+                <select id="trending" ng-model="trending" style="width: 100%;" required>
+			<option value = "true"> TRUE </option>
+			<option value = "false"> FALSE </option>
+		</select>            </label>
+            <button  class="btn btn-default" type="submit" value="submit2">Search by Trending</button>
+</form>
+	    <table class="table table-bordered" style="background: #fff;">
+            	<thead>
+            		<tr>
+                		<td>Id</td>
+                		<td>Name</td>
+                		<td>Contact Number</td>
+                		<td>Image</td>
+                		<td>Location</td>
+                		<td>Address</td>
+                		<td>offer</td>
+                		<td>cashback</td>
+                		<td>trending</td>
+                		<td>Created On</td>
+           		</tr>
+            	</thead>
+            	<tbody ng-repeat="data in stores">
+                	<tr>
+                		<td>{{ data.id }}</td>
+                		<td>{{ data.name }}</td>
+				<td>{{ data.mobile }}</td>
+                		<td><img ng-src="{{ data.face }}" class="outlet-image"/></td>
+				<td>{{ data.locality }}</td>
+				<td>{{ data.address }}</td>
+                		<td>{{ data.offer }}</td>
+                		<td>{{ data.cashback }}</td>
+                		<td>{{ data.trending }}</td>
+                		<td>{{ data.date }}</td>
+                	</tr>
+            	</tbody>
+        </table>
+   </div>
+</body>
+</html>

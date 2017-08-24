@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp"> 
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Rob Backend</title>
+</head>
+<body>
+    <div class="container">
+        <h3 style="margin-bottom: 50px">Bills | <a ng-click="goToDashboard()">Dashboard</a> |<a ng-click="goToUsers()">Users</a>| <a ng-click="goToCashback()">Cashbacks</a> |  <a ng-click="goToOutlets()">Outlets</a> | <a ng-click="goToOffers()">Offers</a> | <a ng-click="goToBillsByOutlet()">Bills By Outlet</a> </h3>
+        <form name="refereesearchForm" id="refereesearchForm" ng-submit="submit(refereesearchForm)" style="float:left;">
+            <label>
+                <select id="referee" ng-model="referee" style="width: 100%;" required>
+                    <option ng-repeat="data in users" >{{data.referee}}</option>
+                </select>
+            </label>
+            <button  class="btn btn-default" type="submit" value="submit">Search By Referee</button>
+        </form>
+        </div>
+        <table class="table table-bordered" style="background: #fff;">
+            <thead>
+            <tr>
+                <td>S No</td>
+                <td>code</td>
+                <td>Referee</td>
+                <td>phone</td>
+                <td>points</td>
+            </tr>
+            </thead>
+            <tbody ng-repeat="data in users | orderBy: 'data.referee' ">
+                <tr>
+                    <td>{{ $index+1 }}</td>
+                    <td>{{ data.code }}</td>
+                    <td>{{ data.referee }}</td>
+                    <td>{{ data.phone }}</td>
+                    <td>{{ data.points }}</td>
+                    </tr>
+            </tbody>
+        </table>
+    </body>
+</html>
